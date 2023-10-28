@@ -20,8 +20,9 @@ def divi(a, b):
     c=a/b
     return c    
 
-ch=1
-while(ch==1):
+
+flag = 0
+while(flag != 1):
        print("1.Addition")
        print("2.Subtraction")
        print("3.Multiplication")
@@ -30,38 +31,45 @@ while(ch==1):
        c=0
 
        try:
-        x=float(input("Enter the Value of A:- "))
-        y=float(input("Enter the Value of B:- "))
-        if(x < y): 
-            raise aLessThanBError
+           A = float(input("Enter the first value:"))
+           B = float(input("Enter the second value:"))
+           
        except ValueError:
-         print("not valid input")
-         exit()
-       except aLessThanBError:
-         print("A is Less than B") 
-         exit()
-       choice=int(input("Enter the choice which you want to perform:- "))
-       result=0
-       try:
-          if choice==1:
-           result=add(x,y)
-           print("The result is:-",result)
-          elif choice==2:
-               result=sub(x,y)
-               print("The result is:-",result)            
-          elif choice==3:
-               result=multi(x,y)
-               print("The result is:-",result)
-          elif choice==4:
-               if(y==0):
-                  raise ZeroDivisionError
+           print("Not a valid input")
+        
+       ch = int(input("Enter the choice!:"))
+       
+       if ch==1:
+           result = add(A,B)
+           print("Result :",result)
+       elif ch==2:
+           try:
+               if(A<B):
+                   raise aLessThanBError
                else:
-                   result=divi(x,y)
-                   print("The result is:-",result)
-          elif (choice==5):
-               ch=0
-          else:
-                print("%d is not valid input. Please enter 1, 2 ,3 ,4 or 5." % choice)
-       except ZeroDivisionError:
-           print("Division by zero is not allowed!")
-           exit()
+                   result = sub(A,B)
+                   print("Result is :", result)
+           except aLessThanBError:
+               print("Value of A is less than Value of B, so this operation cannot be performed!")
+        
+       elif ch==3:
+           result = multi(A,B)
+           print("Result is :",result)
+       elif ch==4:
+           try:
+               if B==0:
+                   raise ZeroDivisionError
+               elif (A<B):
+                   raise aLessThanBError
+               else:
+                   result = divi(A,B)
+                   print("Result is :",result)
+           except ZeroDivisionError:
+               print("Division By 0 is not possible")
+           except aLessThanBError:
+               print("A is Less than B")
+
+
+       elif ch==5:
+           print("Exiting Calculator!")
+           flag = 1
