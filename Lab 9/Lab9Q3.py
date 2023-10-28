@@ -30,23 +30,23 @@ class Bank:
 
 accounts = []
 
-ch = -1
-while ch is not str(5):
-    print("\nEnter 0 to create an account")
-    print("Enter 1 to deposit to account")
-    print("Enter 2 withdraw from account")
-    print("Enter 3 to display account details")
-    print("Enter 4 to exit the bank application")
-    print("Enter your choice: ")
-    ch = input()
-    if ch == str(0):
+flag =0
+while (flag == 0):
+    print("\nMenu:")
+    print("1. Create a new account")
+    print("2. Deposit to an account")
+    print("3. Withdraw from an account")
+    print("4. Print account details")
+    print("5. Exit")
+    ch = int(input("Enter your choice"))
+    if ch == 1:
         name = str(input("Enter the name: "))
         age = int(input("Enter age: "))
         try:
-            if (age < 18 and age > 100):
+            if (age < 18 or age > 100):
                 raise AgeError
         except AgeError:
-            print("Age between 18 to 100")
+            print("Age should between 18 to 100")
             exit()
             
         accno = (input("Enter accno: "))
@@ -54,35 +54,39 @@ while ch is not str(5):
             if (len(accno) < 5):
                 raise AccnoError
         except AccnoError:
-            print("Acc no should be more than 5 digits")
+            print("Account no should be more than 5 digits")
             exit()
         acctype = (input("Enter acctype: "))
         try:
-            if (acctype != "C" and acctype != "S"):
+            if (acctype not in ['S','C']):
                 raise AcctypeError
         except AcctypeError:
             print("Acc type should be C or S")
             exit()
         balance = int(input("Enter the Balance: "))
         B1 = Bank(name, age, accno, acctype, balance)
-        accounts.append(B1);
-    if ch == str(1):
+        accounts.append(B1)
+        print(accounts)
+    if ch == 2:
         acc_no = int(input("Enter accNo: "))
         amountDep = input("Enter amount to for deposit")
         for acc in accounts: 
-            if acc_no == acc.accno:
+            if acc_no == int(acc.accno):
                 acc.deposit(amountDep)
-    if ch == str(2):
+    if ch == 3:
         acc_no = int(input("Enter accNo: "))
         amountWith = input("Enter amount to withdraw")
         for acc in accounts: 
-            if acc_no == acc.accno:
+            if acc_no == int(acc.accno):
                 acc.withdraw(amountWith)
-    if ch == str(3):
+    if ch == 4:
         acc_no = int(input("Enter accNo: "))
-        for acc in accounts:
-            if acc_no == acc.accno:
-                acc.display()
-    if ch == str(4):
+        for account in accounts:
+            print(account.accno)
+            if acc_no == int(account.accno):
+                account.display()
+            else:
+                print("account not found!")
+    if ch == 5:
         print("Exiting")
-        break
+        flag = 1
